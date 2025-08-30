@@ -10,20 +10,4 @@ public class Epic extends Task {
     public ArrayList<Integer> getSubtaskIds() {
         return subtaskIds;
     }
-
-    public String getTitle() {
-        return super.getTitle();
-    }
-
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    public int getId() {
-        return super.getId();
-    }
-
-    public Status getStatus() {
-        return super.getStatus();
-    }
 }
