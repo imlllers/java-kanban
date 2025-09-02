@@ -1,4 +1,10 @@
-import java.util.ArrayList;
+package ru.practicum;
+
+import ru.practicum.manager.TaskManager;
+import ru.practicum.model.Epic;
+import ru.practicum.model.Status;
+import ru.practicum.model.Subtask;
+import ru.practicum.model.Task;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,14 +22,14 @@ public class Main {
         Subtask subtask1 = new Subtask("Учить", "Пройти тему 4", epic1.getId());
         Subtask subtask2 = new Subtask("Повторять", "Повторить 2 и 3 темы", epic1.getId());
 
-        manager.createSubtask(subtask1, epic1);
-        manager.createSubtask(subtask2, epic1);
+        manager.createSubtask(subtask1);
+        manager.createSubtask(subtask2);
 
         Epic epic2 = new Epic("Подготовка к презентации", "Подготовить презентацию для бизнес-встречи");
         manager.createEpic(epic2);
 
         Subtask subtask3 = new Subtask("Подготовить слайды", "Изучить тему и подготовить слайды", epic2.getId());
-        manager.createSubtask(subtask3, epic2);
+        manager.createSubtask(subtask3);
 
         printAll(manager);
 
@@ -31,43 +37,32 @@ public class Main {
         manager.updateTask(task1);
 
         subtask1.setStatus(Status.DONE);
-        manager.updateSubtask(subtask1, epic1);
+        manager.updateSubtask(subtask1);
 
         subtask2.setStatus(Status.IN_PROGRESS);
-        manager.updateSubtask(subtask2, epic1);
+        manager.updateSubtask(subtask2);
 
         subtask3.setStatus(Status.DONE);
-        manager.updateSubtask(subtask3, epic2);
+        manager.updateSubtask(subtask3);
 
-        System.out.println("\n~~~ПОСЛЕ ИЗМЕНЕНИЯ СТАТУСОВ~~~");
+        System.out.println("\n~~~ ПОСЛЕ ИЗМЕНЕНИЯ СТАТУСОВ ~~~");
         printAll(manager);
 
         manager.deleteTask(task2.getId());
-        manager.deleteEpic(epic1, epic1.getId());
+        manager.deleteEpic(epic1.getId());
 
-        System.out.println("\n~~~ПОСЛЕ УДАЛЕНИЯ~~~");
+        System.out.println("\n~~~ ПОСЛЕ УДАЛЕНИЯ ~~~");
         printAll(manager);
     }
 
     private static void printAll(TaskManager manager) {
         System.out.println("\nЗАДАЧИ");
-        for (Task t : manager.getAllTasks()) {
-            System.out.println(t.getStatus() + " - " + t.getTitle());
-        }
+        System.out.println(manager.getAllTasks());
 
         System.out.println("\nЭПИКИ");
-        for (Epic e : manager.getAllEpics()) {
-            System.out.println(e.getStatus() + " - " + e.getTitle());
-            ArrayList<Subtask> subs = manager.getAllEpicSubtasks(e, e.getId());
-            for (Subtask s : subs) {
-                System.out.println("\t" + s.getStatus() + " - " + s.getTitle());
-            }
-        }
+        System.out.println(manager.getAllEpics());
 
         System.out.println("\nПОДЗАДАЧИ");
-        for (Subtask s : manager.getAllSubtasks()) {
-            System.out.println(s.getStatus() + " - " + s.getTitle() + " в эпике " +
-                    manager.getEpic(s.getEpicId()).getTitle());
-        }
+        System.out.println(manager.getAllSubtasks());
     }
 }

@@ -1,3 +1,5 @@
+package ru.practicum.model;
+
 import java.util.Objects;
 
 public class Task {
@@ -38,6 +40,16 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 
     @Override
