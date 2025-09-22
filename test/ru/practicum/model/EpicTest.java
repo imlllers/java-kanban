@@ -17,4 +17,14 @@ class EpicTest {
         assertEquals(0, epic.getSubtaskIds().size(),
                 "Список подзадач эпика должен остаться пустым после попытки добавить самого себя");
     }
+
+    // наследники класса Task равны друг другу, если равен их id
+    @Test
+    void epicsWithSameIdShouldBeEqual() {
+        Epic epic1 = new Epic("title1", "description1");
+        Epic epic2 = new Epic("title2", "description2");
+        epic1.setId(1);
+        epic2.setId(1);
+        assertEquals(epic1, epic2, "Эпики с одинаковыми Id должны быть равны");
+    }
 }

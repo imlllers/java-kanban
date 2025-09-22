@@ -4,14 +4,11 @@ import ru.practicum.model.Epic;
 import ru.practicum.model.Subtask;
 import ru.practicum.model.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
-    // генерация идентификаторов
-    int createId();
-
     // просмотр истории
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
 
     // задачи
     int createTask(Task task);
@@ -20,7 +17,7 @@ public interface TaskManager {
 
     Task getTask(int id);
 
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
 
     void deleteTask(int id);
 
@@ -31,13 +28,11 @@ public interface TaskManager {
 
     void updateEpic(Epic epic);
 
-    void updateEpicStatus(Epic epic);
-
     Epic getEpic(int id);
 
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
-    ArrayList<Subtask> getAllEpicSubtasks(int epicId);
+    List<Subtask> getAllEpicSubtasks(int epicId);
 
     void deleteEpic(int id);
 
@@ -50,7 +45,7 @@ public interface TaskManager {
 
     Subtask getSubtask(int id);
 
-    ArrayList<Subtask> getAllSubtasks();
+    List<Subtask> getAllSubtasks();
 
     void deleteSubtask(int id);
 

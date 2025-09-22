@@ -7,6 +7,7 @@ import ru.practicum.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
@@ -17,14 +18,13 @@ public class InMemoryTaskManager implements TaskManager {
     private int counter;
 
     // генерация идентификаторов
-    @Override
-    public int createId() {
+    private int createId() {
         return ++counter;
     }
 
     // просмотр истории
     @Override
-    public ArrayList<Task> getHistory() {
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
@@ -85,8 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    @Override
-    public void updateEpicStatus(Epic epic) {
+    private void updateEpicStatus(Epic epic) {
         ArrayList<Integer> subIds = epic.getSubtaskIds();
         if (subIds.isEmpty()) {
             epic.setStatus(Status.NEW);
@@ -160,6 +159,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createSubtask(Subtask subtask) {
         if (!epics.containsKey(subtask.getEpicId())) {
+            return -1;
+        }
+        if (subtask.getId() == subtask.getEpicId()) {
             return -1;
         }
         int id = createId();
