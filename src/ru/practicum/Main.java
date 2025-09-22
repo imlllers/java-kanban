@@ -1,5 +1,6 @@
 package ru.practicum;
 
+import ru.practicum.manager.Managers;
 import ru.practicum.manager.TaskManager;
 import ru.practicum.model.Epic;
 import ru.practicum.model.Status;
@@ -8,7 +9,7 @@ import ru.practicum.model.Task;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getDefault();
 
         Task task1 = new Task("Почитать книгу", "Прочесть 3 главы Мастер и Маргарита");
         Task task2 = new Task("Оформить карту", "Съездить в банк");
