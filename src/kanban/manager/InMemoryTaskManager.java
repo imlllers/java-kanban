@@ -1,9 +1,9 @@
-package ru.practicum.manager;
+package kanban.manager;
 
-import ru.practicum.model.Epic;
-import ru.practicum.model.Status;
-import ru.practicum.model.Subtask;
-import ru.practicum.model.Task;
+import kanban.model.Epic;
+import kanban.model.Status;
+import kanban.model.Subtask;
+import kanban.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,13 +52,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
     public void deleteTask(int id) {
         tasks.remove(id);
+        historyManager.remove(id);
     }
 
     @Override
@@ -86,15 +87,13 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void updateEpicStatus(Epic epic) {
-        ArrayList<Integer> subIds = epic.getSubtaskIds();
+        List<Integer> subIds = epic.getSubtaskIds();
         if (subIds.isEmpty()) {
             epic.setStatus(Status.NEW);
             return;
         }
-
         boolean allNew = true;
         boolean allDone = true;
-
         for (Integer subId : subIds) {
             Subtask sub = subtasks.get(subId);
             if (sub != null) {
@@ -102,7 +101,6 @@ public class InMemoryTaskManager implements TaskManager {
                 if (sub.getStatus() != Status.NEW) allNew = false;
             }
         }
-
         if (allDone) {
             epic.setStatus(Status.DONE);
         } else if (allNew) {
@@ -120,14 +118,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Epic> getAllEpics() {
+    public List<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    public ArrayList<Subtask> getAllEpicSubtasks(int epicId) {
+    public List<Subtask> getAllEpicSubtasks(int epicId) {
         Epic epic = epics.get(epicId);
-        ArrayList<Subtask> allSubtasks = new ArrayList<>();
+        List<Subtask> allSubtasks = new ArrayList<>();
         if (epic != null) {
             for (Integer subId : epic.getSubtaskIds()) {
                 Subtask subtask = subtasks.get(subId);
@@ -145,6 +143,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             for (Integer subId : epic.getSubtaskIds()) {
                 subtasks.remove(subId);
+                historyManager.remove(id);
             }
         }
     }
@@ -167,11 +166,9 @@ public class InMemoryTaskManager implements TaskManager {
         int id = createId();
         subtask.setId(id);
         subtasks.put(id, subtask);
-
         Epic epic = epics.get(subtask.getEpicId());
         epic.addSubtask(id);
         updateEpicStatus(epic);
-
         return id;
     }
 
@@ -194,7 +191,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Subtask> getAllSubtasks() {
+    public List<Subtask> getAllSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
@@ -205,6 +202,7 @@ public class InMemoryTaskManager implements TaskManager {
             Epic epic = epics.get(subtask.getEpicId());
             if (epic != null) {
                 epic.removeSubtask(id);
+                historyManager.remove(id);
                 updateEpicStatus(epic);
             }
         }

@@ -1,8 +1,8 @@
-package ru.practicum.manager;
+package kanban.manager;
 
-import ru.practicum.model.Epic;
-import ru.practicum.model.Subtask;
-import ru.practicum.model.Task;
+import kanban.model.Epic;
+import kanban.model.Subtask;
+import kanban.model.Task;
 
 import java.util.List;
 

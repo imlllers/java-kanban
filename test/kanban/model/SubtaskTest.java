@@ -1,8 +1,8 @@
-package ru.practicum.model;
+package kanban.model;
 
 import org.junit.jupiter.api.Test;
-import ru.practicum.manager.InMemoryTaskManager;
-import ru.practicum.manager.TaskManager;
+import kanban.manager.InMemoryTaskManager;
+import kanban.manager.TaskManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
