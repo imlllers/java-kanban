@@ -28,6 +28,8 @@ class InMemoryTaskManagerTest {
         Subtask sub2 = new Subtask("sub2", "desc2", epicId);
         int subId1 = taskManager.createSubtask(sub1);
         int subId2 = taskManager.createSubtask(sub2);
+        taskManager.getSubtask(subId1);
+        taskManager.getSubtask(subId2);
         taskManager.deleteSubtask(subId1);
         List<Subtask> remainingSubtasks = taskManager.getAllEpicSubtasks(epicId);
         assertEquals(1, remainingSubtasks.size(), "В эпике должен остаться только один id подзадачи");
@@ -51,9 +53,10 @@ class InMemoryTaskManagerTest {
     @Test
     void shouldNotKeepDeletedEpicInManager() {
         Epic epic = new Epic("epic title", "epic description");
-        int epicId = taskManager.createEpic(epic);
-        taskManager.deleteEpic(epicId);
-        assertNull(taskManager.getEpic(epicId), "Удаленный эпик не должен возвращаться из менеджера");
+        taskManager.createEpic(epic);
+        taskManager.getEpic(epic.getId());
+        taskManager.deleteEpic(epic.getId());
+        assertNull(taskManager.getEpic(epic.getId()), "Удаленный эпик не должен возвращаться из менеджера");
     }
 
     @Test
@@ -94,8 +97,10 @@ class InMemoryTaskManagerTest {
     void deletingEpicRemovesSubtasksFromManager() {
         Epic epic = new Epic("epic title", "epic description");
         int epicId = taskManager.createEpic(epic);
+        taskManager.getEpic(epicId);
         Subtask subtask = new Subtask("sub", "desc", epicId);
         int subId = taskManager.createSubtask(subtask);
+        taskManager.getSubtask(subId);
         taskManager.deleteEpic(epicId);
         assertNull(taskManager.getSubtask(subId), "Подзадачи удаленного эпика не должны оставаться в менеджере");
     }
