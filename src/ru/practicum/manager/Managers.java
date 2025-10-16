@@ -1,4 +1,4 @@
-package kanban.manager;
+package ru.practicum.manager;
 
 public class Managers {
     public static TaskManager getDefault() {

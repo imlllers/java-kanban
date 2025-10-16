@@ -1,11 +1,11 @@
-package kanban.manager;
+package ru.practicum.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import kanban.model.Epic;
-import kanban.model.Status;
-import kanban.model.Subtask;
-import kanban.model.Task;
+import ru.practicum.model.Epic;
+import ru.practicum.model.Status;
+import ru.practicum.model.Subtask;
+import ru.practicum.model.Task;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package kanban.model;
+package ru.practicum.model;
 
 public class Node<T> {
     public T data;

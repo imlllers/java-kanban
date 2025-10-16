@@ -1,4 +1,4 @@
-package kanban.manager;
+package ru.practicum.manager;
 
 import org.junit.jupiter.api.Test;
 

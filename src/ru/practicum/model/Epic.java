@@ -1,4 +1,4 @@
-package kanban.model;
+package ru.practicum.model;
 
 import java.util.ArrayList;
 

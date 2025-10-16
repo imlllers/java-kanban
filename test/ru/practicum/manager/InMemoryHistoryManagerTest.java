@@ -1,8 +1,8 @@
-package kanban.manager;
+package ru.practicum.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import kanban.model.Task;
+import ru.practicum.model.Task;
 
 import java.util.List;
 
@@ -18,7 +18,6 @@ class InMemoryHistoryManagerTest {
         historyManager = Managers.getDefaultHistory();
     }
 
-    // задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных
     @Test
     void taskInHistoryShouldBeImmutable() {
         Task task = new Task("task title", "task description");

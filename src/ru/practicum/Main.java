@@ -1,11 +1,11 @@
-package kanban;
+package ru.practicum;
 
-import kanban.manager.Managers;
-import kanban.manager.TaskManager;
-import kanban.model.Epic;
-import kanban.model.Status;
-import kanban.model.Subtask;
-import kanban.model.Task;
+import ru.practicum.manager.Managers;
+import ru.practicum.manager.TaskManager;
+import ru.practicum.model.Epic;
+import ru.practicum.model.Status;
+import ru.practicum.model.Subtask;
+import ru.practicum.model.Task;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
-package kanban.manager;
+package ru.practicum.manager;
 
-import kanban.model.Node;
-import kanban.model.Task;
+import ru.practicum.model.Node;
+import ru.practicum.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,54 +9,44 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node<Task>> idToNode;
+    private final Map<Integer, Node<Task>> idToNode = new HashMap<>();
     private Node<Task> first;
     private Node<Task> last;
 
-    public InMemoryHistoryManager() {
-        idToNode = new HashMap<>();
-    }
-
-    public void linkLast(Task task) {
+    private void linkLast(Task task) {
         Node<Task> oldLast = last;
         Node<Task> newLast = new Node<>(task, null, oldLast);
         last = newLast;
         if (oldLast == null) {
-            first = last;
+            first = newLast;
         } else {
             oldLast.next = newLast;
         }
     }
 
-    public List<Task> getTasks() {
+    private List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
-        Node<Task> currentTask = first;
-        while (currentTask != null) {
-            tasks.add(currentTask.data);
-            currentTask = currentTask.next;
+        Node<Task> current = first;
+        while (current != null) {
+            tasks.add(current.data);
+            current = current.next;
         }
         return tasks;
     }
 
-    public void removeNode(Node<Task> node) {
+    private void removeNode(Node<Task> node) {
+        if (node == null) return;
         Node<Task> prev = node.prev;
         Node<Task> next = node.next;
-
         if (prev == null) {
             first = next;
-            if (next != null) {
-                next.prev = null;
-            }
         } else {
-            prev.next = null;
+            prev.next = next;
         }
         if (next == null) {
             last = prev;
-            if (prev != null) {
-                prev.next = null;
-            }
         } else {
-            next.prev = null;
+            next.prev = prev;
         }
         node.data = null;
         node.prev = null;
@@ -65,14 +55,17 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        removeNode(idToNode.remove(id));
+        Node<Task> node = idToNode.remove(id);
+        if (node != null) {
+            removeNode(node);
+        }
     }
 
     @Override
     public void add(Task task) {
+        if (task == null) return;
         if (idToNode.containsKey(task.getId())) {
-            Node<Task> node = idToNode.get(task.getId());
-            removeNode(node);
+            removeNode(idToNode.get(task.getId()));
         }
         linkLast(task);
         idToNode.put(task.getId(), last);

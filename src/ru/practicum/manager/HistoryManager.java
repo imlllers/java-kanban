@@ -1,6 +1,6 @@
-package kanban.manager;
+package ru.practicum.manager;
 
-import kanban.model.Task;
+import ru.practicum.model.Task;
 import java.util.List;
 
 public interface HistoryManager {
