@@ -10,7 +10,6 @@ class ManagersTest {
     void shouldReturnInitializedManagers() {
         TaskManager taskManager = Managers.getDefault();
         HistoryManager historyManager = Managers.getDefaultHistory();
-
         assertNotNull(taskManager, "TaskManager должен быть проинициализирован");
         assertNotNull(historyManager, "HistoryManager должен быть проинициализирован");
     }

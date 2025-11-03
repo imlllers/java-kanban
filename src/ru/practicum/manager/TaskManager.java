@@ -7,10 +7,8 @@ import ru.practicum.model.Task;
 import java.util.List;
 
 public interface TaskManager {
-    // просмотр истории
     List<Task> getHistory();
 
-    // задачи
     int createTask(Task task);
 
     void updateTask(Task task);
@@ -23,7 +21,6 @@ public interface TaskManager {
 
     void deleteAllTasks();
 
-    // эпики
     int createEpic(Epic epic);
 
     void updateEpic(Epic epic);
@@ -38,7 +35,6 @@ public interface TaskManager {
 
     void deleteAllEpics();
 
-    // подзадачи
     int createSubtask(Subtask subtask);
 
     void updateSubtask(Subtask subtask);
