@@ -1,12 +1,14 @@
 package ru.practicum.manager;
 
+import ru.practicum.exception.ManagerLoadException;
+import ru.practicum.exception.ManagerSaveException;
 import ru.practicum.model.*;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
+    private static final String CSV_HEADER = "id,type,name,status,description,epic\n";
     private final File file;
 
     public FileBackedTaskManager(File file) {
@@ -15,7 +17,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     protected void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write(CSV_HEADER);
 
             for (Task task : getAllTasks()) {
                 writer.write(toString(task) + "\n");
@@ -35,19 +37,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private String toString(Task task) {
         StringBuilder sb = new StringBuilder();
         sb.append(task.getId()).append(",");
-        if (task instanceof Epic) {
-            sb.append(TaskType.EPIC);
-        } else if (task instanceof Subtask) {
-            sb.append(TaskType.SUBTASK);
-        } else {
-            sb.append(TaskType.TASK);
-        }
+
+        sb.append(task.getType());
         sb.append(",").append(task.getTitle());
         sb.append(",").append(task.getStatus());
         sb.append(",").append(task.getDescription()).append(",");
-        if (task instanceof Subtask) {
+
+        if (task.getType() == TaskType.SUBTASK) {
             sb.append(((Subtask) task).getEpicId());
         }
+
         return sb.toString();
     }
 
@@ -111,7 +110,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 }
             }
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка при чтении файла: " + file.getName(), e);
+            throw new ManagerLoadException("Ошибка при загрузке файла: " + file.getName(), e);
         }
         return manager;
     }

@@ -54,14 +54,24 @@ class FileBackedTaskManagerTest {
         assertEquals(2, loaded.getAllSubtasks().size(), "Должно быть 2 сабтаска");
 
         Task loadedTask = loaded.getAllTasks().getFirst();
-        assertEquals("task title 1", loadedTask.getTitle());
-        assertEquals(Status.NEW, loadedTask.getStatus());
+        assertEquals(task1.getId(), loadedTask.getId(), "ID задачи должно совпадать");
+        assertEquals(task1.getTitle(), loadedTask.getTitle(), "Название задачи должно совпадать");
+        assertEquals(task1.getDescription(), loadedTask.getDescription(), "Описание задачи должно совпадать");
+        assertEquals(task1.getStatus(), loadedTask.getStatus(), "Статус задачи должен совпадать");
 
         Epic loadedEpic = loaded.getAllEpics().getFirst();
-        assertEquals("epic title 1", loadedEpic.getTitle());
+        assertEquals(epic.getId(), loadedEpic.getId(), "ID эпика должно совпадать");
+        assertEquals(epic.getTitle(), loadedEpic.getTitle(), "Название эпика должно совпадать");
+        assertEquals(epic.getDescription(), loadedEpic.getDescription(), "Описание эпика должно совпадать");
+        assertEquals(epic.getStatus(), loadedEpic.getStatus(), "Статус эпика должен совпадать");
         assertEquals(2, loadedEpic.getSubtaskIds().size(), "Эпик должен содержать 2 сабтаска");
 
         Subtask loadedSub = loaded.getAllSubtasks().getFirst();
+        assertEquals(sub1.getId(), loadedSub.getId(), "ID подзадачи должно совпадать");
+        assertEquals(sub1.getTitle(), loadedSub.getTitle(), "Название подзадачи должно совпадать");
+        assertEquals(sub1.getDescription(), loadedSub.getDescription(), "Описание подзадачи должно совпадать");
+        assertEquals(sub1.getStatus(), loadedSub.getStatus(), "Статус подзадачи должен совпадать");
+        assertEquals(sub1.getEpicId(), loadedSub.getEpicId(), "EpicId подзадачи должен совпадать");
         assertEquals(loadedEpic.getId(), loadedSub.getEpicId(), "Сабтаск должен ссылаться на свой эпик");
     }
 
